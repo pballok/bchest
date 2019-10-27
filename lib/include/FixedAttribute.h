@@ -6,7 +6,7 @@
 class FixedAttribute : public BaseAttribute
 {
 public:
-    FixedAttribute(double base);
+    FixedAttribute(int modifier_cost, double base);
     FixedAttribute(const FixedAttribute& other) = delete;
     FixedAttribute(FixedAttribute&& other) = delete;
     FixedAttribute& operator=(const FixedAttribute& other) = delete;
