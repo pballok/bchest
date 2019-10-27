@@ -12,3 +12,5 @@ target_include_directories(bchestcore
   PUBLIC include
   PRIVATE .
 )
+
+add_subdirectory(test)
