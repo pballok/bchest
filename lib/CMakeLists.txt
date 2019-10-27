@@ -1,5 +1,6 @@
 add_library(bchestcore SHARED
-  base_attribute.cpp
+  BaseAttribute.cpp
+  FixedAttribute.cpp
 )
 
 set_target_properties(bchestcore
