@@ -12,6 +12,7 @@ public:
     virtual ~BaseAttribute() = default;
 
     void set_modifier(double modifier);
+    double modifier() const;
 
     virtual double value() const = 0;
 

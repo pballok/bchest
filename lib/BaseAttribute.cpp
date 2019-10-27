@@ -11,6 +11,11 @@ void BaseAttribute::set_modifier(double modifier)
   modifier_ = modifier;
 }
 
+double BaseAttribute::modifier() const
+{
+  return modifier_;
+}
+
 int BaseAttribute::cost() const
 {
   return static_cast<int>(modifier_ * modifier_cost_);

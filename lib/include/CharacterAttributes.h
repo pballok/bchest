@@ -87,6 +87,6 @@ class AttributeBM : public SecondaryAttribute<1>
   {}
 
   double value() const override { return floor(base_attributes_[0]->value()) + modifier_; }
-}
+};
 
 #endif // BCHEST_CORE_CHARACTER_ATTRIBUTES_H
