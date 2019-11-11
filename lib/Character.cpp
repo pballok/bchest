@@ -4,27 +4,16 @@
 Character::Character(std::string name)
   : name_(std::move(name))
 {
-  auto attribute_st   = std::make_shared<AttributeST>();
-  auto attribute_iq   = std::make_shared<AttributeIQ>();
-  auto attribute_dx   = std::make_shared<AttributeDX>();
-  auto attribute_ht   = std::make_shared<AttributeHT>();
-  auto attribute_hp   = std::make_shared<AttributeHP>(attribute_st);
-  auto attribute_will = std::make_shared<AttributeWill>(attribute_iq);
-  auto attribute_per  = std::make_shared<AttributePer>(attribute_iq);
-  auto attribute_fp   = std::make_shared<AttributeFP>(attribute_ht);
-  auto attribute_bs   = std::make_shared<AttributeBS>(attribute_ht, attribute_dx);
-  auto attribute_bm   = std::make_shared<AttributeBM>(attribute_bs);
-
-  attributes_[CharacterAttributeType::ST] = attribute_st;
-  attributes_[CharacterAttributeType::IQ] = attribute_iq;
-  attributes_[CharacterAttributeType::DX] = attribute_dx;
-  attributes_[CharacterAttributeType::HT] = attribute_ht;
-  attributes_[CharacterAttributeType::HP] = attribute_hp;
-  attributes_[CharacterAttributeType::WILL] = attribute_will;
-  attributes_[CharacterAttributeType::PER] = attribute_per;
-  attributes_[CharacterAttributeType::FP] = attribute_fp;
-  attributes_[CharacterAttributeType::BS] = attribute_bs;
-  attributes_[CharacterAttributeType::BM] = attribute_bm;
+  attributes_[CharacterAttributeType::ST] = std::make_shared<AttributeST>();
+  attributes_[CharacterAttributeType::IQ] = std::make_shared<AttributeIQ>();
+  attributes_[CharacterAttributeType::DX] = std::make_shared<AttributeDX>();
+  attributes_[CharacterAttributeType::HT] = std::make_shared<AttributeHT>();
+  attributes_[CharacterAttributeType::HP] = std::make_shared<AttributeHP>(attributes_.at(CharacterAttributeType::ST));
+  attributes_[CharacterAttributeType::WILL] = std::make_shared<AttributeWill>(attributes_.at(CharacterAttributeType::IQ));
+  attributes_[CharacterAttributeType::PER] = std::make_shared<AttributePer>(attributes_.at(CharacterAttributeType::IQ));
+  attributes_[CharacterAttributeType::FP] = std::make_shared<AttributeFP>(attributes_.at(CharacterAttributeType::HT));
+  attributes_[CharacterAttributeType::BS] = std::make_shared<AttributeBS>(attributes_.at(CharacterAttributeType::DX), attributes_.at(CharacterAttributeType::HT));
+  attributes_[CharacterAttributeType::BM] = std::make_shared<AttributeBM>(attributes_.at(CharacterAttributeType::BS));
 }
 
 std::string Character::name() const
@@ -35,7 +24,7 @@ std::string Character::name() const
 double Character::cost() const
 {
   double cost = 0.0;
-  for(auto attrib : attributes_) {
+  for(const auto& attrib : attributes_) {
     cost += attrib.second->cost();
   }
 
