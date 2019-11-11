@@ -1,6 +1,7 @@
 add_library(bchestcore SHARED
-  BaseAttribute.cpp
-  BasicAttribute.cpp
+  Character.cpp
+  CharacterAttribute.cpp
+  PrimaryAttribute.cpp
   SecondaryAttribute.cpp
 )
 

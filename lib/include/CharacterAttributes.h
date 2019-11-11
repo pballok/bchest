@@ -1,92 +1,77 @@
 #ifndef BCHEST_CORE_CHARACTER_ATTRIBUTES_H
 #define BCHEST_CORE_CHARACTER_ATTRIBUTES_H
 
-#include "BasicAttribute.h"
+#include "PrimaryAttribute.h"
 #include "SecondaryAttribute.h"
 
 #include <cmath>
+#include <memory>
 
-class AttributeST : public BasicAttribute
+class AttributeST : public PrimaryAttribute
 {
 public:
-  AttributeST()
-    : BasicAttribute(10, 10)
-  {}
+  AttributeST() : PrimaryAttribute(10, 10) {}
 };
 
-class AttributeIQ : public BasicAttribute
+class AttributeIQ : public PrimaryAttribute
 {
 public:
-  AttributeIQ()
-    : BasicAttribute(20, 10)
-  {}
+  AttributeIQ() : PrimaryAttribute(20, 10) {}
 };
 
-class AttributeDX : public BasicAttribute
+class AttributeDX : public PrimaryAttribute
 {
 public:
-  AttributeDX()
-    : BasicAttribute(20, 10)
-  {}
+  AttributeDX() : PrimaryAttribute(20, 10) {}
 };
 
-class AttributeHT : public BasicAttribute
+class AttributeHT : public PrimaryAttribute
 {
 public:
-  AttributeHT()
-    : BasicAttribute(10, 10)
-  {}
+  AttributeHT() : PrimaryAttribute(10, 10) {}
 };
 
-class AttributeHP : public SecondaryAttribute<1>
+class AttributeHP : public SecondaryAttribute
 {
 public:
-  AttributeHP(std::shared_ptr<AttributeST> attribute_st)
-    : SecondaryAttribute(2, { attribute_st })
-  {}
+  AttributeHP(std::shared_ptr<AttributeST> attribute_st) : SecondaryAttribute(2, attribute_st) {}
 };
 
-class AttributeWill : public SecondaryAttribute<1>
+class AttributeWill : public SecondaryAttribute
 {
 public:
-  AttributeWill(std::shared_ptr<AttributeIQ> attribute_iq)
-    : SecondaryAttribute(5, { attribute_iq })
-  {}
+  AttributeWill(std::shared_ptr<AttributeIQ> attribute_iq) : SecondaryAttribute(5, attribute_iq) {}
 };
 
-class AttributePer : public SecondaryAttribute<1>
+class AttributePer : public SecondaryAttribute
 {
 public:
-  AttributePer(std::shared_ptr<AttributeIQ> attribute_iq)
-    : SecondaryAttribute(5, { attribute_iq })
-  {}
+  AttributePer(std::shared_ptr<AttributeIQ> attribute_iq) : SecondaryAttribute(5, attribute_iq) {}
 };
 
-class AttributeFP : public SecondaryAttribute<1>
+class AttributeFP : public SecondaryAttribute
 {
 public:
-  AttributeFP(std::shared_ptr<AttributeHT> attribute_ht)
-    : SecondaryAttribute(3, { attribute_ht })
-  {}
+  AttributeFP(std::shared_ptr<AttributeHT> attribute_ht) : SecondaryAttribute(3, attribute_ht) {}
 };
 
-class AttributeBS : public SecondaryAttribute<2>
+class AttributeBS : public CharacterAttribute
 {
 public:
-  AttributeBS(std::shared_ptr<AttributeHT> attribute_ht, std::shared_ptr<AttributeDX> attribute_dx)
-    : SecondaryAttribute(20, { attribute_ht, attribute_dx })
-  {}
-
-  double value() const override { return (base_attributes_[0]->value() + base_attributes_[1]->value()) / 4.0; }
+  AttributeBS(std::shared_ptr<AttributeHT> attribute_ht, std::shared_ptr<AttributeDX> attribute_dx) : CharacterAttribute(20), ht_base_(attribute_ht), dx_base_(attribute_dx) {}
+  double value() const override { return (ht_base_->value() + dx_base_->value()) / 4.0; }
+protected:
+  std::shared_ptr<AttributeHT> ht_base_;
+  std::shared_ptr<AttributeDX> dx_base_;
 };
 
-class AttributeBM : public SecondaryAttribute<1>
+class AttributeBM : public CharacterAttribute
 {
-  AttributeBM(std::shared_ptr<AttributeBS> attribute_bs)
-    : SecondaryAttribute(5, { attribute_bs })
-  {}
-
-  double value() const override { return floor(base_attributes_[0]->value()) + modifier_; }
+public:
+  AttributeBM(std::shared_ptr<AttributeBS> attribute_bs) : CharacterAttribute(5), bs_base_(attribute_bs) {}
+  double value() const override { return floor(bs_base_->value()) + modifier_; }
+protected:
+  std::shared_ptr<AttributeBS> bs_base_;
 };
 
 #endif // BCHEST_CORE_CHARACTER_ATTRIBUTES_H

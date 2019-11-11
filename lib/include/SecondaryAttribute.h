@@ -1,16 +1,15 @@
-#ifndef BCHEST_CORE_SECONDARY_ATTRIBUTE_H
-#define BCHEST_CORE_SECONDARY_ATTRIBUTE_H
+#ifndef BCHEST_CORE_SECONDARYATTRIBUTE_H
+#define BCHEST_CORE_SECONDARYATTRIBUTE_H
 
-#include "BaseAttribute.h"
+#include "CharacterAttribute.h"
 
 #include <array>
 #include <memory>
 
-template<std::size_t N>
-class SecondaryAttribute : public BaseAttribute
+class SecondaryAttribute : public CharacterAttribute
 {
 public:
-    SecondaryAttribute(int modifier_cost, std::array<std::shared_ptr<BaseAttribute>, N> base_attributes);
+    SecondaryAttribute(int modifier_cost, std::shared_ptr<CharacterAttribute> base_attribute);
     SecondaryAttribute(const SecondaryAttribute& other) = delete;
     SecondaryAttribute(SecondaryAttribute&& other) = delete;
     SecondaryAttribute& operator=(const SecondaryAttribute& other) = delete;
@@ -20,7 +19,7 @@ public:
     double value() const override;
 
 protected:
-    std::array<std::shared_ptr<BaseAttribute>, N> base_attributes_;
+    std::shared_ptr<CharacterAttribute> base_attribute_;
 };
 
-#endif // BCHEST_CORE_SECONDARY_ATTRIBUTE_H
+#endif // BCHEST_CORE_SECONDARYATTRIBUTE_H

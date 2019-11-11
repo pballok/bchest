@@ -2,11 +2,12 @@
 #define BCHEST_CORE_CHARACTER_H
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "CharacterAttributeType.h"
 
-class BaseAttribute;
+class CharacterAttribute;
 
 class Character
 {
@@ -28,7 +29,7 @@ public:
 
 private:
     std::string name_;
-    std::map<CharacterAttributeType, std::shared_ptr<BaseAttribute>> attributes_;
+    std::map<CharacterAttributeType, std::shared_ptr<CharacterAttribute>> attributes_;
 };
 
 #endif // BCHEST_CORE_CHARACTER_H
