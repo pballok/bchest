@@ -59,7 +59,7 @@ class AttributeBS : public CharacterAttribute
 {
 public:
   AttributeBS(std::shared_ptr<CharacterAttribute> attribute_ht, std::shared_ptr<CharacterAttribute> attribute_dx) : CharacterAttribute(20), ht_base_(attribute_ht), dx_base_(attribute_dx) {}
-  double value() const override { return (ht_base_->value() + dx_base_->value()) / 4.0; }
+  double value() const override { return ((ht_base_->value() + dx_base_->value()) / 4.0) + modifier_; }
 protected:
   std::shared_ptr<CharacterAttribute> ht_base_;
   std::shared_ptr<CharacterAttribute> dx_base_;
